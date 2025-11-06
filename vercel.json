@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "api/**/*.py": {
+      "runtime": "python"
+    }
+  },
+  "routes": [
+    { "src": "/(.*)", "dest": "/public/$1" }
+  ]
+}

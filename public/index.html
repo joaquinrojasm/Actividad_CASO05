@@ -1,0 +1,46 @@
+<!-- public/index.html -->
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Control difuso - ventilador</title>
+  <style>
+    body{font-family:system-ui,Arial;margin:32px}
+    label,input{font-size:1.1rem}
+    .resultado{margin-top:20px;font-weight:700}
+  </style>
+</head>
+<body>
+  <h1>Prueba sistema difuso - ventilador</h1>
+  <label>Temperatura (°C): <input id="temp" type="number" min="0" max="40" value="32"/></label>
+  <button id="send">Calcular velocidad</button>
+
+  <div class="resultado" id="res">—</div>
+
+  <script>
+    const btn = document.getElementById('send');
+    const res = document.getElementById('res');
+
+    btn.addEventListener('click', async () => {
+      const t = Number(document.getElementById('temp').value);
+      res.textContent = 'Consultando...';
+      try {
+        const r = await fetch('/api/predict', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({temperatura: t})
+        });
+        const j = await r.json();
+        if (r.ok) {
+          res.textContent = `Temperatura: ${j.temperatura} °C → Velocidad recomendada: ${j.velocidad.toFixed(2)}%`;
+        } else {
+          res.textContent = 'Error: ' + JSON.stringify(j);
+        }
+      } catch (err) {
+        res.textContent = 'Error de red: ' + err;
+      }
+    });
+  </script>
+</body>
+</html>
