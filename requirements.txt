@@ -1,4 +1,6 @@
-flask
-scikit-learn
+Flask==3.0.3
+gunicorn
 numpy
 pandas
+scikit-learn
+pickle-mixin
