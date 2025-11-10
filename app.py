@@ -5,10 +5,10 @@ import numpy as np
 app = Flask(__name__)
 
 # === Cargar modelo y scaler ===
-with open('model/diabetes_model.pkl', 'rb') as f:
+with open('diabetes_model.pkl', 'rb') as f:
     model = pickle.load(f)
 
-with open('model/scaler.pkl', 'rb') as f:
+with open('scaler.pkl', 'rb') as f:
     scaler = pickle.load(f)
 
 
